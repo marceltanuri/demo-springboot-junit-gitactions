@@ -1,0 +1,45 @@
+name: CI (Continuous Integration)
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Step 1: Configurar o JDK
+    steps:
+      - name: Checando o código do repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar o JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'  # Defina a versão do Java que você está usando
+          distribution: 'adoptopenjdk'
+
+      # Step 2: Instalar o Gradle
+      - name: Configurar o Gradle
+        uses: gradle/wrapper-validation-action@v1
+
+      # Step 3: Rodar os testes
+      - name: Executar testes unitários
+        run: ./gradlew test --no-daemon
+
+      # Step 4: Publicar os relatórios dos testes (opcional)
+      - name: Publicar relatórios de testes
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: build/reports/tests/test/
+
+  # (opcional) Para enviar notificações ou fazer outras tarefas após o build
+  # Para exemplo de notificações, verifique as actions para Slack, e-mail, etc.
