@@ -43,7 +43,7 @@ public class ContatoService {
         }
 
         // Salvar o contato
-        return contatoRepository.save(contato);
+        return contato;//contatoRepository.save(contato);
     }
 
     // Listar todos os contatos
