@@ -35,7 +35,7 @@ jobs:
 
       # Step 4: Publicar os relatórios de testes
       - name: Publicar relatórios de testes
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: test-reports
