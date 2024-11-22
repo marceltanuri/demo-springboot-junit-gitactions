@@ -22,8 +22,8 @@ jobs:
       - name: Configurar o JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '21'  # Defina a versão do Java que você está usando
-          distribution: 'adoptopenjdk'
+          java-version: '17'  # Defina a versão do Java que você está usando
+          distribution: 'temurin'  # Usando a distribuição temurin do Adoptium
 
       # Step 2: Instalar o Gradle
       - name: Configurar o Gradle
@@ -33,13 +33,10 @@ jobs:
       - name: Executar testes unitários
         run: ./gradlew test --no-daemon
 
-      # Step 4: Publicar os relatórios dos testes (opcional)
+      # Step 4: Publicar os relatórios de testes
       - name: Publicar relatórios de testes
         if: success()
         uses: actions/upload-artifact@v3
         with:
           name: test-reports
           path: build/reports/tests/test/
-
-  # (opcional) Para enviar notificações ou fazer outras tarefas após o build
-  # Para exemplo de notificações, verifique as actions para Slack, e-mail, etc.
